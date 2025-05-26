@@ -81,9 +81,9 @@ export default function Dashboard() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Header: Title and Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-4">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center sm:text-left">
             Төхөөрөмжийн мэдээлэл 📊 
-          </h1>
+            </h1>
           <div className="flex items-center gap-3 sm:gap-4">
             <Link
               href="/"
