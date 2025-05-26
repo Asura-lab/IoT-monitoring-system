@@ -24,7 +24,7 @@ export default function RegisterDevice() {
 
   return (
     <main className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Register a new device</h1>
+      <h1 className="text-2xl font-bold mb-4">Төхөөрөмж бүртгүүлэх</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
@@ -38,10 +38,13 @@ export default function RegisterDevice() {
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Register Device
+          Бүртгүүлэх
         </button>
         {message && <p className="text-sm text-center">{message}</p>}
       </form>
+      <a href="/" className="border border-white rounded-2xl p-4 hover:bg-white transition duration-300 inline-block w-max mt-6 text-white hover:text-black font-bold text-xs">
+        Буцах
+      </a>
     </main>
   );
 }

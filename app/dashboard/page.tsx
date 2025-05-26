@@ -60,26 +60,34 @@ export default function Dashboard() {
       </label>
 
       <div className="overflow-x-auto mt-6">
-        <table className="min-w-full table-auto border border-collapse">
-          <thead className="bg-gray-200">
-            <tr>
-              <th className="border px-4 py-2">Type</th>
-              <th className="border px-4 py-2">Value</th>
-              <th className="border px-4 py-2">Timestamp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((entry, index) => (
-              <tr key={index} className="text-sm text-center">
-                <td className="border px-4 py-2">{entry.type}</td>
-                <td className="border px-4 py-2">{entry.value}</td>
-                <td className="border px-4 py-2">
-                  {new Date(entry.timestamp).toLocaleString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="grid gird-cols-2 gap-4 mb-4">
+          <a href="/" className="border border-white rounded-2xl p-4 hover:bg-white transition duration-300 inline-block w-max mt-6 text-white hover:text-black font-bold text-xs">
+            Буцах
+          </a>
+          <div>           
+            <table className="min-w-full table-auto border border-collapse">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th className="border px-4 py-2 text-black">Type</th>
+                  <th className="border px-4 py-2 text-black">Value</th>
+                  <th className="border px-4 py-2 text-black">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((entry, index) => (
+                  <tr key={index} className="text-sm text-center">
+                    <td className="border px-4 py-2 text-black">{entry.type}</td>
+                    <td className="border px-4 py-2 text-black">{entry.value}</td>
+                    <td className="border px-4 py-2 text-black">
+                      {new Date(entry.timestamp).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </main>
   );
