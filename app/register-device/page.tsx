@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link"; // Add this import
 
 export default function RegisterDevice() {
   const [deviceId, setDeviceId] = useState("");
@@ -42,9 +43,12 @@ export default function RegisterDevice() {
         </button>
         {message && <p className="text-sm text-center">{message}</p>}
       </form>
-      <a href="/" className="border border-white rounded-2xl p-4 hover:bg-white transition duration-300 inline-block w-max mt-6 text-white hover:text-black font-bold text-xs">
+      <Link
+        href="/"
+        className="border border-white rounded-2xl p-4 hover:bg-white transition duration-300 inline-block w-max mt-6 text-white hover:text-black font-bold text-xs"
+      >
         Буцах
-      </a>
+      </Link>
     </main>
   );
 }

@@ -9,7 +9,8 @@ await mongoose.connect(process.env.MONGODB_URI!);
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!session)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { searchParams } = new URL(req.url);
   const deviceId = searchParams.get("deviceId");

@@ -10,12 +10,15 @@
     "clean-data": "ts-node scripts/deleteOldData.ts"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "lucide-react": "^0.511.0",
     "mongoose": "^8.15.0",
     "mqtt": "^5.13.0",
     "next": "15.3.2",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
