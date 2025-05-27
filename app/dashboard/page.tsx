@@ -147,57 +147,8 @@ export default function Dashboard() {
               </div>
             </div>
           </label>
-        </div>
-        {/* Data Table Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
-          {isLoadingData ? (
-            <p className="p-6 text-center">Loading data...</p>
-          ) : Object.keys(groupedData).length > 0 ? (
-            // Display grouped data by type
-            Object.entries(groupedData).map(([type, entries]) => (
-              <div key={type} className="p-4 border-b dark:border-gray-700">
-                <h3 className="text-lg font-semibold mb-2">
-                  Sensor Type: {type}
-                </h3>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full table-auto mb-4">
-                    <thead className="bg-gray-100 dark:bg-gray-700">
-                      <tr>
-                        <th className="px-4 py-3 text-left text-sm font-semibold">
-                          Value
-                        </th>
-                        <th className="px-4 py-3 text-left text-sm font-semibold">
-                          Timestamp
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                      {entries.map((entry, idx) => (
-                        <tr
-                          key={idx}
-                          className="hover:bg-gray-50 dark:hover:bg-gray-700/50"
-                        >
-                          <td className="px-4 py-3 text-sm">{entry.value}</td>
-                          <td className="px-4 py-3 text-sm">
-                            {new Date(entry.timestamp).toLocaleString()}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="p-6 text-center">
-              {selectedDeviceId
-                ? "No data for this device."
-                : "Select a device."}
-            </p>
-          )}
-        </div>
-        <RealtimeData /> {/* Add the RealtimeData component here */}
-        <DeviceChart /> {/* Include the DeviceChart component */}
+          <RealtimeData /> {/* Add the RealtimeData component here */}
+      </div>
       </div>
     </main>
   );

@@ -42,7 +42,7 @@ export default function RealtimeData() {
               className="bg-white rounded-2xl shadow p-4 border border-gray-200 hover:shadow-lg transition"
             >
               <p className="text-sm text-gray-500">Device: {deviceId}</p>
-              <h3 className="text-lg font-semibold capitalize">{type}</h3>
+              <h3 className="text-lg text-gray-400 font-semibold capitalize">{type}</h3>
               <p className="text-2xl text-blue-600 mt-2">{value}</p>
               <p className="text-xs text-gray-400 mt-1">Topic: <code>{topic}</code></p>
             </div>
