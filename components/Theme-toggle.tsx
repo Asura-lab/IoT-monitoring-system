@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { Moon, Sun, Monitor } from "lucide-react";
-import { useTheme } from "@/app/providers/theme-provider";
+import { useTheme, Theme } from "@/app/providers/theme-provider";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -14,7 +14,9 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div className="flex items-center gap-1 p-1 h-[38px] w-[100px] rounded-lg bg-gray-200 dark:bg-slate-800 animate-pulse"></div>;
+    return (
+      <div className="flex items-center gap-1 p-1 h-[38px] w-[100px] rounded-lg bg-gray-200 dark:bg-slate-800 animate-pulse"></div>
+    );
   }
 
   const themeOptions = [
@@ -38,7 +40,8 @@ export function ThemeToggle() {
               activeSpecificClasses = "bg-slate-700 text-yellow-400 shadow-sm";
               break;
             case "system":
-              activeSpecificClasses = "bg-white dark:bg-slate-600 text-slate-500 dark:text-slate-300 shadow-sm";
+              activeSpecificClasses =
+                "bg-white dark:bg-slate-600 text-slate-500 dark:text-slate-300 shadow-sm";
               break;
           }
         }
@@ -46,7 +49,7 @@ export function ThemeToggle() {
         return (
           <button
             key={option.value}
-            onClick={() => setTheme(option.value)}
+            onClick={() => setTheme(option.value as Theme)}
             title={option.label}
             aria-pressed={isActive}
             className={`

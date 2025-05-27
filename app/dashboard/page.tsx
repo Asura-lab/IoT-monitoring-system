@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import DeviceChart from "@/components/DeviceChart";
+import RealtimeData from "@/components/RealtimeData"; // Import the component
 
 interface Device {
   id: string;
@@ -76,14 +78,21 @@ export default function Dashboard() {
     fetchData();
   }, [selectedDeviceId]);
 
+  // Group entries by type
+  const groupedData = data.reduce((acc, entry) => {
+    if (!acc[entry.type]) acc[entry.type] = [];
+    acc[entry.type].push(entry);
+    return acc;
+  }, {} as Record<string, DeviceData[]>);
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 py-6 sm:py-10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Header: Title and Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-4">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center sm:text-left">
-            Төхөөрөмжийн мэдээлэл 📊 
-            </h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center sm:text-left">
+            Төхөөрөмжийн мэдээлэл 📊
+          </h1>
           <div className="flex items-center gap-3 sm:gap-4">
             <Link
               href="/"
@@ -93,14 +102,15 @@ export default function Dashboard() {
             </Link>
           </div>
         </div>
-
         {/* Device Selector Card */}
         <div className="mb-6 sm:mb-8 p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-xl shadow-xl">
           <label className="flex flex-col sm:flex-row sm:items-center gap-3">
             <span className="text-md font-medium text-gray-800 dark:text-gray-200 whitespace-nowrap">
               Төхөөрөмж сонгох:
             </span>
-            <div className="relative w-full sm:w-auto flex-grow"> {/* Wrapper for select and custom arrow */}
+            <div className="relative w-full sm:w-auto flex-grow">
+              {" "}
+              {/* Wrapper for select and custom arrow */}
               <select
                 value={selectedDeviceId}
                 onChange={(e) => setSelectedDeviceId(e.target.value)}
@@ -119,63 +129,75 @@ export default function Dashboard() {
                   ))
                 )}
               </select>
-              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-700 dark:text-gray-300"> {/* Custom arrow container, right-3 positions it from the right edge */}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z" clipRule="evenodd" />
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-700 dark:text-gray-300">
+                {" "}
+                {/* Custom arrow container, right-3 positions it from the right edge */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             </div>
           </label>
         </div>
-
         {/* Data Table Card */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
           {isLoadingData ? (
-            <p className="p-6 text-gray-600 dark:text-gray-400 text-center">
-              Loading data...
-            </p>
-          ) : data.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full table-auto">
-                <thead className="bg-gray-100 dark:bg-gray-700">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-800 dark:text-gray-100">
-                      Type
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-800 dark:text-gray-100">
-                      Value
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-800 dark:text-gray-100">
-                      Timestamp
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {data.map((entry, index) => (
-                    <tr
-                      key={index}
-                      className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition duration-150"
-                    >
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {entry.type}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {entry.value}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">
-                        {new Date(entry.timestamp).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <p className="p-6 text-center">Loading data...</p>
+          ) : Object.keys(groupedData).length > 0 ? (
+            // Display grouped data by type
+            Object.entries(groupedData).map(([type, entries]) => (
+              <div key={type} className="p-4 border-b dark:border-gray-700">
+                <h3 className="text-lg font-semibold mb-2">
+                  Sensor Type: {type}
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full table-auto mb-4">
+                    <thead className="bg-gray-100 dark:bg-gray-700">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-sm font-semibold">
+                          Value
+                        </th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold">
+                          Timestamp
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                      {entries.map((entry, idx) => (
+                        <tr
+                          key={idx}
+                          className="hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                        >
+                          <td className="px-4 py-3 text-sm">{entry.value}</td>
+                          <td className="px-4 py-3 text-sm">
+                            {new Date(entry.timestamp).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))
           ) : (
-            <p className="p-6 text-gray-600 dark:text-gray-400 text-center">
-              {selectedDeviceId ? "Уг төхөөрөмж идэвхгүй байна" : "Та эхлээд төхөөрөмж сонгоно уу."}
+            <p className="p-6 text-center">
+              {selectedDeviceId
+                ? "No data for this device."
+                : "Select a device."}
             </p>
           )}
         </div>
+        <RealtimeData /> {/* Add the RealtimeData component here */}
+        <DeviceChart /> {/* Include the DeviceChart component */}
       </div>
     </main>
   );
