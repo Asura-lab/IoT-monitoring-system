@@ -8,8 +8,8 @@ import Device from "@/models/Device";
 export async function GET() {
   const session = await getServerSession(authOptions);
   if (!session || !session.user?.email) {
-    // Redirect to login if not authenticated
-    return NextResponse.redirect("/api/auth/signin");
+    // Return JSON error instead of redirect for API calls
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   await connectDB();
